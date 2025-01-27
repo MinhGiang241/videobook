@@ -1,0 +1,15 @@
+{
+  "env": {
+    "es2020": true
+  },
+  "parser": "@typescript-eslint",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["next", "prettier", "eslint:recomended", "@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "off",
+    "prefer-const": "off",
+    "no-var": "off",
+    "no-unused-vars": "off",
+    "object-shorthand": "warn"
+  }
+}
