@@ -10,7 +10,8 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Button } from "antd";
-import { openVideo } from "../services/videos";
+import { openVideo } from "../../services/videos";
+import { formatDuration } from "@/services/utils";
 
 export default function DetailsPage() {
   const search = useSearchParams();
@@ -110,6 +111,45 @@ export default function DetailsPage() {
                   new Date(video.LastAccessTime ?? ""),
                 )}
               </span>
+            </div>
+            <div className=" flex gap-1 items-center">
+              <span className="text-sm text-blue-800 font-semibold">
+                Duration:
+              </span>
+
+              <span className="text-sm">
+                {formatDuration(video.Duration ?? 0)}
+              </span>
+            </div>
+            <div className=" flex gap-1 items-center">
+              <span className="text-sm text-blue-800 font-semibold">
+                Resolution:
+              </span>
+
+              <span className="text-sm">
+                {`${video.Width} x ${video.Height}`}
+              </span>
+            </div>
+            <div className=" flex gap-1 items-center">
+              <span className="text-sm text-blue-800 font-semibold">
+                ImagePath:
+              </span>
+
+              <span className="text-sm">{video.ThumbNail}</span>
+              <Button
+                onClick={() => {
+                  const imageFolderList = [
+                    ...(video.ThumbNail?.split("/") ?? []),
+                  ];
+                  imageFolderList?.pop();
+                  const imagePath = imageFolderList?.join("/");
+                  openVideo(imagePath);
+                }}
+                size="small"
+                type="link"
+              >
+                Open Folder thumbs
+              </Button>
             </div>
           </div>
           <Button

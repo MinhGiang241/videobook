@@ -104,6 +104,18 @@ export default function Home() {
       value: "LastAccessTime",
       label: "LastAccessTime",
     },
+    {
+      value: "Duration",
+      label: "Duration",
+    },
+    {
+      value: "Width",
+      label: "Width",
+    },
+    {
+      value: "Height",
+      label: "Height",
+    },
   ];
 
   const orders = [

@@ -2,8 +2,9 @@ import { Video } from "@/interface/data";
 import { Button, Tooltip } from "antd";
 import Image from "next/image";
 import React from "react";
-import { openVideo } from "../services/videos";
+import { openVideo } from "../../services/videos";
 import Link from "next/link";
+import { formatDuration } from "../../services/utils";
 
 function VideoCard({ item }: { item: Video }) {
   return (
@@ -13,6 +14,9 @@ function VideoCard({ item }: { item: Video }) {
         className="w-full bg-white rounded-lg overflow-clip shadow-md shadow-slate-950 select-text cursor-pointer"
       >
         <div className="h-32 w-full relative">
+          <div className="rounded-sm bottom-1 right-1 bg-black/40 text-white z-10 absolute text-xs font-semibold px-2 py-1">
+            {formatDuration(item.Duration ?? 0)}
+          </div>
           <Image
             objectFit="fit"
             src={item.ImagePath ?? "https://unsplash.it/640/640"}
@@ -37,6 +41,7 @@ function VideoCard({ item }: { item: Video }) {
             <Button
               type="primary"
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 openVideo(item.Path);
               }}

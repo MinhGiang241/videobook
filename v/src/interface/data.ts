@@ -9,4 +9,7 @@ export interface Video {
   Type?: string;
   ImagePath?: string;
   DirectoryName?: string;
+  Width?: number;
+  Height?: number;
+  Duration?: number;
 }
