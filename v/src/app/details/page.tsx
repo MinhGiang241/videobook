@@ -165,12 +165,12 @@ export default function DetailsPage() {
       ) : (
         <div>Không thấy Video</div>
       )}
-      <video
-        src="https://youtu.be/0ANs-K1XyH8?si=GJ7Oysb3y9t63iFO" //"http://127.0.0.1:3000/api/videos/stream"
-        controls
-        width="800"
-        height="450"
-      />
+      <video controls width="800" height="450">
+        <source
+          src={`http://localhost:3000/api/videos/stream/${id}`}
+          type="video/mp4"
+        />
+      </video>
     </>
   );
 }

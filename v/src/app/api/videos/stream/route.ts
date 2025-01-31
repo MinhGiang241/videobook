@@ -7,8 +7,7 @@ ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 export async function GET(req: NextRequest) {
   try {
-    const videoPath =
-      "C:\\Users\\Admin\\Downloads\\Modern JavaScript From The Beginning - First 12 Hours.mp4";
+    const videoPath = "C:\\Users\\Admin\\Downloads\\M.mp4";
     const range = req.headers.get("range");
     if (!range) {
       return new NextResponse("Requires Range header", { status: 400 });
