@@ -22,6 +22,24 @@ const videoSchema = new mongoose.Schema({
   Type: {
     type: String,
   },
+  Disk: {
+    type: String,
+  },
+  Height: {
+    type: Number,
+  },
+  Width: {
+    type: Number,
+  },
+  Duration: {
+    type: Number,
+  },
+  ImagePath: {
+    type: String,
+  },
+  Folder: {
+    type: String,
+  },
 });
 
 videoSchema.methods.getVideoList = function ({

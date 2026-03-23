@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import Button from "antd/es/button";
 import React from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import axios from "axios";
 
 function Header() {
   return (
@@ -28,6 +30,16 @@ function Header() {
           >
             Sign Up
           </Button>
+
+          {/* <Button */}
+          {/*   onClick={async () => { */}
+          {/*     const data = await axios.get("/api/videos/play"); */}
+          {/*     console.log("Data", data); */}
+          {/*   }} */}
+          {/*   type="default" */}
+          {/* > */}
+          {/*   SetUp */}
+          {/* </Button> */}
         </div>
       </div>
     </div>

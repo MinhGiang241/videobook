@@ -15,6 +15,8 @@ export async function POST(request: NextRequest) {
     const text = reqBody["text"];
     const sort = reqBody["sort"];
     const order = reqBody["order"];
+    const disk = reqBody["disk"];
+    const folder = reqBody["folder"];
 
     const a = {} as any;
     a[sort] = order;
@@ -38,8 +40,30 @@ export async function POST(request: NextRequest) {
           },
         ]
       : [];
+    const diskPipeline = disk
+      ? [
+          {
+            $match: {
+              Disk: disk,
+            },
+          },
+        ]
+      : [];
+
+    const folderPipeline = folder
+      ? [
+          {
+            $match: {
+              Folder: folder,
+            },
+          },
+        ]
+      : [];
+
     const list = await Video.aggregate([
       ...searchPipeline,
+      ...diskPipeline,
+      ...folderPipeline,
       sortPipeline,
       ...pipeline,
     ]);
@@ -47,12 +71,20 @@ export async function POST(request: NextRequest) {
     if (text) {
       const obj: any = await Video.aggregate([
         ...searchPipeline,
+        ...diskPipeline,
+        ...folderPipeline,
         { $count: "total" },
       ]);
       total = obj?.length >= 1 ? (obj[0]["total"] as number) : 0;
       console.log("obj", obj, total);
     } else {
-      total = await Video.countDocuments();
+      const obj: any = await Video.aggregate([
+        ...searchPipeline,
+        ...diskPipeline,
+        ...folderPipeline,
+        { $count: "total" },
+      ]);
+      total = obj?.length >= 1 ? (obj[0]["total"] as number) : 0;
     }
     return NextResponse.json({ list, total, success: true });
   } catch (error: any) {

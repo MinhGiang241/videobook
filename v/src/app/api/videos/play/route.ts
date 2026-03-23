@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Video from "@/models/video";
 import { exec } from "child_process";
 import { NextRequest, NextResponse } from "next/server";
 // connect();
@@ -24,4 +26,45 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json({});
+}
+
+export async function GET() {
+  try {
+    const list = await Video.find();
+
+    await Video.updateMany({}, [
+      {
+        $set: {
+          Disk: { $arrayElemAt: [{ $split: ["$Path", ":"] }, 0] },
+
+          Folder: {
+            $let: {
+              vars: {
+                parts: {
+                  $split: [
+                    { $arrayElemAt: [{ $split: ["$Path", ":"] }, 1] },
+                    "\\",
+                  ],
+                },
+              },
+              in: {
+                $arrayElemAt: [
+                  "$$parts",
+                  { $subtract: [{ $size: "$$parts" }, 2] },
+                ],
+              },
+            },
+          },
+        },
+      },
+    ]);
+
+    return NextResponse.json({ list, total: list.length, success: true });
+  } catch (error: any) {
+    console.error(error.message);
+    return NextResponse.json(
+      { error: error.message, success: false },
+      { status: 500 },
+    );
+  }
 }

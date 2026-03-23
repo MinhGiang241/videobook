@@ -21,7 +21,7 @@ export default function DetailsPage() {
   const [video, setVideo] = useState<Video | undefined>();
   const getDetailsVideo = async () => {
     const res: ResultResponseDetails = await axios.post(
-      "http://127.0.0.1:3000/api/videos/details",
+      `${process.env.NEXT_PUBLIC_LOCAL}/api/videos/details`,
       {
         id,
       },
@@ -167,7 +167,7 @@ export default function DetailsPage() {
       )}
       <video controls width="800" height="450">
         <source
-          src={`http://localhost:3000/api/videos/stream/${id}`}
+          src={`${process.env.NEXT_PUBLIC_LOCAL}/api/videos/stream/${id}`}
           type="video/mp4"
         />
       </video>

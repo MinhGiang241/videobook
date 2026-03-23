@@ -5,6 +5,15 @@ export interface GetListPost {
   skip?: number;
 }
 
+export interface ResultResponseOption {
+  status?: number;
+  data?: {
+    list?: { value?: string; label?: string }[];
+    success: boolean;
+    error?: string;
+  };
+}
+
 export interface ResultResponseList {
   status?: number;
   data?: {

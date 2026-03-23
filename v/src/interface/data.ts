@@ -12,4 +12,6 @@ export interface Video {
   Width?: number;
   Height?: number;
   Duration?: number;
+  Disk?: string;
+  Folder?: string;
 }
