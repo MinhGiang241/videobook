@@ -71,12 +71,11 @@ export default function EditVideoModal({
         </div>
         <div className="flex flex-col w-full">
           <div>Path</div>
-          <Input
-            disabled
-            onChange={onChangeText}
-            value={info?.Path}
-            title="Path"
-          />
+          <Input onChange={onChangeText} value={info?.Path} title="Path" />
+        </div>
+        <div className="flex flex-col w-full">
+          <div>Type</div>
+          <Input onChange={onChangeText} value={info?.Type} title="Type" />
         </div>
         <div className="flex flex-col w-full">
           <div>ThumbNail</div>

@@ -40,7 +40,7 @@ export async function GET() {
       [
         {
           $set: {
-            Type: ".ts",
+            Type: ".mp4",
             Name: {
               $replaceOne: {
                 input: "$Name",

@@ -15,22 +15,64 @@ export async function GET(req: NextRequest, { params }: { params: any }) {
   const videoPath = video.Path;
   console.log({ video });
 
-  const stream = ffmpeg(videoPath)
-    .addOptions([
-      "-f hls",
-      "-hls_time 4",
-      "-hls_list_size 5",
-      "-hls_flags delete_segments+append_list+omit_endlist",
-      "-c:v libx264",
-      "-c:a aac",
-    ])
-    .format("hls")
-    .pipe();
+  const filePath = videoPath;
+
+  if (!fs.existsSync(filePath)) {
+    return new Response("Video not found", { status: 404 });
+  }
+
+  const stat = fs.statSync(filePath);
+  const fileSize = stat.size;
+
+  const range = req.headers.get("range");
+
+  // Không có Range -> trả toàn bộ file
+  if (!range) {
+    const stream = fs.createReadStream(filePath);
+
+    return new Response(stream as any, {
+      headers: {
+        "Content-Type": "video/mp4",
+        "Content-Length": fileSize.toString(),
+        "Accept-Ranges": "bytes",
+      },
+    });
+  }
+
+  // Range: bytes=1000-2000
+  const [startStr, endStr] = range.replace("bytes=", "").split("-");
+
+  const start = Number(startStr);
+  const end = endStr ? Number(endStr) : fileSize - 1;
+
+  if (
+    Number.isNaN(start) ||
+    Number.isNaN(end) ||
+    start >= fileSize ||
+    start > end
+  ) {
+    return new Response("Invalid range", {
+      status: 416,
+      headers: {
+        "Content-Range": `bytes */${fileSize}`,
+      },
+    });
+  }
+
+  const chunkSize = end - start + 1;
+
+  const stream = fs.createReadStream(filePath, {
+    start,
+    end,
+  });
 
   return new Response(stream as any, {
+    status: 206,
     headers: {
-      "Content-Type": "application/vnd.apple.mpegurl",
-      "Cache-Control": "no-cache",
+      "Content-Type": "video/mp4",
+      "Content-Length": chunkSize.toString(),
+      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+      "Accept-Ranges": "bytes",
     },
   });
 }

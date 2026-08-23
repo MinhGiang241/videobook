@@ -25,5 +25,5 @@ export default function VideoPlayer({ src }: { src: string }) {
     }
   }, [src]);
 
-  return <video ref={videoRef} controls width={800} />;
+  return <video src={src} controls width={800} />;
 }
