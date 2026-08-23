@@ -15,7 +15,7 @@ if(-not([System.IO.File]::Exists("./video.json")))
 foreach($disk  in $disks)
 {
 
-  if($disk -eq "D" )
+  if($disk -eq "H" )
   {
     $disk.GetType()
     $folderPath = "$($disk):/New folder"

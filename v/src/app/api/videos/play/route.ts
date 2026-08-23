@@ -32,32 +32,60 @@ export async function GET() {
   try {
     const list = await Video.find();
 
-    await Video.updateMany({}, [
+    await Video.updateMany(
       {
-        $set: {
-          Disk: { $arrayElemAt: [{ $split: ["$Path", ":"] }, 0] },
-
-          Folder: {
-            $let: {
-              vars: {
-                parts: {
-                  $split: [
-                    { $arrayElemAt: [{ $split: ["$Path", ":"] }, 1] },
-                    "\\",
-                  ],
-                },
+        Disk: "F",
+        Folder: "g",
+      },
+      [
+        {
+          $set: {
+            Type: ".ts",
+            Name: {
+              $replaceOne: {
+                input: "$Name",
+                find: ".mkv",
+                replacement: ".mp4",
               },
-              in: {
-                $arrayElemAt: [
-                  "$$parts",
-                  { $subtract: [{ $size: "$$parts" }, 2] },
-                ],
+            },
+            Path: {
+              $replaceOne: {
+                input: "$Path",
+                find: ".mkv",
+                replacement: ".mp4",
               },
             },
           },
         },
-      },
-    ]);
+      ],
+    );
+
+    // await Video.updateMany({}, [
+    //   {
+    //     $set: {
+    //       Disk: { $arrayElemAt: [{ $split: ["$Path", ":"] }, 0] },
+    //
+    //       Folder: {
+    //         $let: {
+    //           vars: {
+    //             parts: {
+    //               $split: [
+    //                 { $arrayElemAt: [{ $split: ["$Path", ":"] }, 1] },
+    //                 "\\",
+    //               ],
+    //             },
+    //           },
+    //           in: {
+    //             $arrayElemAt: [
+    //               "$$parts",
+    //               { $subtract: [{ $size: "$$parts" }, 2] },
+    //             ],
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    // ]);
 
     return NextResponse.json({ list, total: list.length, success: true });
   } catch (error: any) {

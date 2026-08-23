@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "antd";
 import { openVideo } from "../../services/videos";
 import { formatDuration } from "@/services/utils";
+import VideoPlayer from "../components/VideoPlayer";
 
 export default function DetailsPage() {
   const search = useSearchParams();
@@ -165,12 +166,15 @@ export default function DetailsPage() {
       ) : (
         <div>Không thấy Video</div>
       )}
-      <video controls width="800" height="450">
-        <source
-          src={`${process.env.NEXT_PUBLIC_LOCAL}/api/videos/stream/${id}`}
-          type="video/mp4"
-        />
-      </video>
+      <VideoPlayer
+        src={`${process.env.NEXT_PUBLIC_LOCAL}/api/videos/stream/${id}`}
+      />
+      {/* <video controls width="800" height="450"> */}
+      {/*   <source */}
+      {/*     src={`${process.env.NEXT_PUBLIC_LOCAL}/api/videos/stream/${id}`} */}
+      {/*     type="video/mp4" */}
+      {/*   /> */}
+      {/* </video> */}
     </>
   );
 }

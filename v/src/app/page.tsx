@@ -30,6 +30,7 @@ export default function Home() {
   const [folders, setFolders] = useState<{ value?: string; label?: string }[]>(
     [],
   );
+  const [active, setActive] = useState<string | undefined>(undefined);
 
   const getOptions = async () => {
     try {
@@ -171,6 +172,7 @@ export default function Home() {
 
   const disks = [
     { value: "", label: "All" },
+    { value: "I", label: "I" },
     { value: "G", label: "G" },
     { value: "H", label: "H" },
     { value: "F", label: "F" },
@@ -245,7 +247,7 @@ export default function Home() {
       ) : (
         <div className="grid grid-cols-4 mb-5 w-full gap-x-3 gap-y-4">
           {list.map((t, i) => (
-            <VideoCard item={t} key={i} />
+            <VideoCard active={active} setActive={setActive} item={t} key={i} />
           ))}
         </div>
       )}

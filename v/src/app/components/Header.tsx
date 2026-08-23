@@ -31,15 +31,15 @@ function Header() {
             Sign Up
           </Button>
 
-          {/* <Button */}
-          {/*   onClick={async () => { */}
-          {/*     const data = await axios.get("/api/videos/play"); */}
-          {/*     console.log("Data", data); */}
-          {/*   }} */}
-          {/*   type="default" */}
-          {/* > */}
-          {/*   SetUp */}
-          {/* </Button> */}
+          <Button
+            onClick={async () => {
+              const data = await axios.get("/api/videos/play");
+              console.log("Data", data);
+            }}
+            type="default"
+          >
+            SetUp
+          </Button>
         </div>
       </div>
     </div>
