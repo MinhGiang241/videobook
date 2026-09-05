@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     console.log(`Output: ${stdout}`);
   });
 
-  return NextResponse.json({});
+  return NextResponse.json({ success: true });
 }
 
 export async function GET() {
@@ -35,7 +35,7 @@ export async function GET() {
     await Video.updateMany(
       {
         Disk: "F",
-        Folder: "g",
+        Folder: "n",
       },
       [
         {

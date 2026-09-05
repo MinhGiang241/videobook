@@ -32,3 +32,12 @@ export interface ResultResponseDetails {
     error?: string;
   };
 }
+
+export interface ResultResponseImage {
+  status?: number;
+  data?: {
+    data?: string;
+    success: boolean;
+    error?: string;
+  };
+}

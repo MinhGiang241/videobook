@@ -9,6 +9,8 @@ import { formatDuration } from "../../services/utils";
 import toast from "react-hot-toast";
 import { MoreOutlined } from "@ant-design/icons";
 import EditVideoModal from "./EditVideoModal";
+import ImagePrieviewModal from "./ImagePreviewModal";
+import ImagePreviewModal from "./ImagePreviewModal";
 
 function DropDownItem({
   text,
@@ -32,11 +34,16 @@ function VideoCard({
   item,
   active,
   setActive,
+  thumbnailVersion,
+  setThumbnailVersion,
 }: {
   item: Video;
   active?: string;
   setActive: any;
+  thumbnailVersion?: number;
+  setThumbnailVersion: any;
 }) {
+  const [index, setIndex] = useState<number>(0);
   const items = [
     {
       key: "editName",
@@ -45,6 +52,19 @@ function VideoCard({
           text={"Sửa"}
           onClick={() => {
             setActive(item._id);
+            setIndex(1);
+          }}
+        />
+      ),
+    },
+    {
+      key: "img",
+      label: (
+        <DropDownItem
+          text={"Hình ảnh"}
+          onClick={() => {
+            setActive(item._id);
+            setIndex(2);
           }}
         />
       ),
@@ -67,7 +87,11 @@ function VideoCard({
             </div>
             <Image
               objectFit="fit"
-              src={item.ImagePath ?? "https://unsplash.it/640/640"}
+              src={
+                !item.ImagePath
+                  ? "https://unsplash.it/640/640"
+                  : `${item.ImagePath ?? ""}?v=${thumbnailVersion}`
+              }
               alt="img"
               loading="lazy"
               fill
@@ -100,7 +124,7 @@ function VideoCard({
                 }).format((item?.Size ?? 0) / (1024 * 2))}
                 MB
               </div>
-              <div>
+              <div className="flex">
                 <Button
                   type="primary"
                   onClick={(e) => {
@@ -112,6 +136,16 @@ function VideoCard({
                 >
                   Play
                 </Button>
+                <Button
+                  className="ml-1 text-blue-800 bg-yellow-700"
+                  onClick={() => {
+                    setActive(item._id);
+                    setIndex(2);
+                  }}
+                  size="small"
+                >
+                  Image
+                </Button>
                 <Dropdown menu={{ items }} trigger={["click"]}>
                   <Button type="text" icon={<MoreOutlined />} />
                 </Dropdown>
@@ -120,14 +154,28 @@ function VideoCard({
           </div>
         </div>
       </Tooltip>
-
-      <EditVideoModal
-        video={item}
-        open={item._id === active}
-        onCancel={() => {
-          setActive(undefined);
-        }}
-      />
+      {index === 1 && (
+        <EditVideoModal
+          setIndex={setIndex}
+          video={item}
+          open={item._id === active}
+          onCancel={() => {
+            setActive(undefined);
+          }}
+        />
+      )}
+      {index === 2 && (
+        <ImagePreviewModal
+          thumbnailVersion={thumbnailVersion}
+          setThumbnailVersion={setThumbnailVersion}
+          setIndex={setIndex}
+          video={item}
+          open={item._id === active}
+          onCancel={() => {
+            setActive(undefined);
+          }}
+        />
+      )}
     </>
   );
 }

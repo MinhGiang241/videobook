@@ -27,6 +27,7 @@ export default function Home() {
   const [text, setText] = useState<string | undefined>();
   const [disk, setDisk] = useState<string>("");
   const [folder, setFolder] = useState<string>("");
+  const [thumbnailVersion, setThumbnailVersion] = useState(Date.now());
   const [folders, setFolders] = useState<{ value?: string; label?: string }[]>(
     [],
   );
@@ -229,6 +230,22 @@ export default function Home() {
           />
         )}
       </div>
+      <Pagination
+        current={page}
+        pageSizeOptions={[8, 12, 20, 40, 100]}
+        defaultPageSize={limit}
+        showSizeChanger
+        onShowSizeChange={onShowSizeChange}
+        onChange={onPageChange}
+        defaultCurrent={1}
+        showTotal={(total, range) =>
+          `${range[0]}-${range[1]} of ${total} items`
+        }
+        showQuickJumper
+        total={total}
+      />
+      <div className="h-5" />
+
       {loading ? (
         <div className="grid grid-cols-4 mb-5 w-full gap-x-3 gap-y-4">
           {Array.from({ length: limit }).map((_, i) => (
@@ -247,7 +264,14 @@ export default function Home() {
       ) : (
         <div className="grid grid-cols-4 mb-5 w-full gap-x-3 gap-y-4">
           {list.map((t, i) => (
-            <VideoCard active={active} setActive={setActive} item={t} key={i} />
+            <VideoCard
+              setThumbnailVersion={setThumbnailVersion}
+              thumbnailVersion={thumbnailVersion}
+              active={active}
+              setActive={setActive}
+              item={t}
+              key={i}
+            />
           ))}
         </div>
       )}

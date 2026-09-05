@@ -10,11 +10,13 @@ import { formatDuration } from "@/services/utils";
 
 interface EditVideoProps extends BaseModalProps {
   video: Video;
+  setIndex: any;
 }
 export default function EditVideoModal({
   video,
   open,
   onCancel,
+  setIndex,
 }: EditVideoProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [info, setInfo] = useState<Video>(video);
@@ -62,6 +64,7 @@ export default function EditVideoModal({
         open={open}
         onCancel={() => {
           setLoading(false);
+          setIndex(0);
           onCancel();
         }}
       >
@@ -80,47 +83,43 @@ export default function EditVideoModal({
         <div className="flex flex-col w-full">
           <div>ThumbNail</div>
           <Input
-            disabled
             onChange={onChangeText}
             value={info?.ThumbNail}
             title="ThumbNail"
           />
-          <div className="flex flex-col w-full">
-            <div>Disk</div>
-            <Input
-              disabled
-              onChange={onChangeText}
-              value={info?.Disk}
-              title="Disk"
-            />
-          </div>
-          <div className="flex flex-col w-full">
-            <div>DirectoryName</div>
-            <Input
-              disabled
-              onChange={onChangeText}
-              value={info?.DirectoryName}
-              title="DirectoryName"
-            />
-          </div>
-          <div className="flex flex-col w-full">
-            <div>Folder</div>
-            <Input
-              disabled
-              onChange={onChangeText}
-              value={info?.Folder}
-              title="Folder"
-            />
-          </div>
-          <div className="flex flex-col w-full">
-            <div>Duration</div>
-            <Input
-              disabled
-              onChange={onChangeText}
-              value={formatDuration(info.Duration ?? 0)}
-              title="Duration"
-            />
-          </div>
+        </div>
+        <div className="flex flex-col w-full">
+          <div>ImagePath</div>
+          <Input
+            onChange={onChangeText}
+            value={info?.ImagePath}
+            title="ImagePath"
+          />
+        </div>
+        <div className="flex flex-col w-full">
+          <div>Disk</div>
+          <Input onChange={onChangeText} value={info?.Disk} title="Disk" />
+        </div>
+        <div className="flex flex-col w-full">
+          <div>DirectoryName</div>
+          <Input
+            onChange={onChangeText}
+            value={info?.DirectoryName}
+            title="DirectoryName"
+          />
+        </div>
+        <div className="flex flex-col w-full">
+          <div>Folder</div>
+          <Input onChange={onChangeText} value={info?.Folder} title="Folder" />
+        </div>
+        <div className="flex flex-col w-full">
+          <div>Duration</div>
+          <Input
+            disabled
+            onChange={onChangeText}
+            value={formatDuration(info.Duration ?? 0)}
+            title="Duration"
+          />
         </div>
 
         <div className="flex mt-3 w-full justify-center">

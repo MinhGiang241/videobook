@@ -58,7 +58,7 @@ export default function DetailsPage() {
             <Image
               className="rounded-md"
               fill
-              src={video?.ImagePath ?? ""}
+              src={`${video.ImagePath ?? ""}?v=${Date.now()}`}
               alt="image"
             />
           </div>
