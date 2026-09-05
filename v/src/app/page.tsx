@@ -233,7 +233,7 @@ export default function Home() {
       <Pagination
         current={page}
         pageSizeOptions={[8, 12, 20, 40, 100]}
-        defaultPageSize={limit}
+        pageSize={limit}
         showSizeChanger
         onShowSizeChange={onShowSizeChange}
         onChange={onPageChange}
@@ -279,7 +279,7 @@ export default function Home() {
       <Pagination
         current={page}
         pageSizeOptions={[8, 12, 20, 40, 100]}
-        defaultPageSize={limit}
+        pageSize={limit}
         showSizeChanger
         onShowSizeChange={onShowSizeChange}
         onChange={onPageChange}
