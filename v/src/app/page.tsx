@@ -15,7 +15,7 @@ type SearchProps = GetProps<typeof Input.Search>;
 const { Search } = Input;
 
 export default function Home() {
-  const [sort, setSort] = useState<string>("LastAccessTime");
+  const [sort, setSort] = useState<string>("Random");
   const [order, setOrder] = useState<number>(-1);
   const [list, setList] = useState<Video[]>([]);
   const [skip, setSkip] = useState(0);
@@ -164,6 +164,10 @@ export default function Home() {
       value: "Height",
       label: "Height",
     },
+    {
+      value: "Random",
+      label: "Random",
+    },
   ];
 
   const orders = [
@@ -232,7 +236,7 @@ export default function Home() {
       </div>
       <Pagination
         current={page}
-        pageSizeOptions={[8, 12, 20, 40, 100]}
+        pageSizeOptions={[2, 4, 8, 12, 20, 40, 100, 200]}
         pageSize={limit}
         showSizeChanger
         onShowSizeChange={onShowSizeChange}
@@ -278,7 +282,7 @@ export default function Home() {
 
       <Pagination
         current={page}
-        pageSizeOptions={[8, 12, 20, 40, 100]}
+        pageSizeOptions={[2, 4, 8, 12, 20, 40, 100, 200]}
         pageSize={limit}
         showSizeChanger
         onShowSizeChange={onShowSizeChange}

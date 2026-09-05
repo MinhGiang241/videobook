@@ -20,11 +20,19 @@ export async function POST(request: NextRequest) {
 
     const a = {} as any;
     a[sort] = order;
-    const sortPipeline = {
-      $sort: a,
-    };
+    const sortPipeline =
+      sort === "Random"
+        ? {
+            $sample: {
+              size: limit,
+            },
+          }
+        : {
+            $sort: a,
+          };
 
-    const pipeline = [{ $skip: skip }, { $limit: limit }];
+    const pipeline =
+      sort === "Random" ? [] : [{ $skip: skip }, { $limit: limit }];
     const searchPipeline = text
       ? [
           {

@@ -9,7 +9,6 @@ import { formatDuration } from "../../services/utils";
 import toast from "react-hot-toast";
 import { MoreOutlined } from "@ant-design/icons";
 import EditVideoModal from "./EditVideoModal";
-import ImagePrieviewModal from "./ImagePreviewModal";
 import ImagePreviewModal from "./ImagePreviewModal";
 
 function DropDownItem({
